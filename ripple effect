@@ -1,0 +1,35 @@
+ const coreValueCard =document.querySelectorAll(".core-value-col");
+         let ripple;
+         coreValueCard.forEach((card)=>{
+            card.onmouseenter=(e)=>{
+            const x=e.clientX-e.target.getBoundingClientRect().left;
+            const y=e.clientY-e.target.getBoundingClientRect().top;
+           ripple=document.createElement("div");
+           ripple.classList.add("ripple");
+           ripple.style.left=`${x}px`;
+           ripple.style.top=`${y}px`;
+           card.append(ripple);
+          }
+         })
+         coreValueCard.forEach((card)=>{
+            card.addEventListener("mouseleave",(e)=>{
+             card.removeChild(ripple);
+            })
+         })
+         let elem=document.querySelectorAll(".manage-card");
+         for (let i = 0; i < elem.length; i++) {         
+         elem[i].addEventListener("mousemove",(e)=>{     
+          let elx=e.clientX;
+          let ely=e.clientY;
+          let rect=elem[i].getBoundingClientRect();
+          makeTransformation(elx,ely,rect);
+       });
+       function makeTransformation(x,y,rect){
+          let x1=x-(rect.x+(rect.width/2));
+          let y1=y-(rect.y+(rect.height/2));
+          elem[i].style.transform=`translateZ(10px) rotateX(${x1/8}deg) rotateY(${y1/8}deg)`;
+       }
+
+       elem[i].addEventListener("mouseout",()=>{
+          elem[i].style.transform="translateZ(0px) rotateX(0deg) rotatey(0deg)";
+       });
